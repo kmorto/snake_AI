@@ -1,4 +1,5 @@
 import pygame
+import random
 
 pygame.init()
 disx = 400
@@ -9,10 +10,14 @@ pygame.display.set_caption('Snake AI Bro')
 red = (255, 0, 0)
 blue = (0, 0, 255)
 black = (0, 0, 0)
+white = (255, 255, 255)
 
-# Starting pos
+# Starting pos for snake
 x1 = disx / 2
 y1 = disy / 2
+# Randomly place food
+x2 = random.randrange(1, disx)
+y2 = random.randrange(1, disy)
 
 #to move the snake on key press
 x_change = 0
@@ -40,13 +45,20 @@ while not game_over:
                 x_change = 0
     x1 += x_change
     y1 += y_change
-    if x1 > disx or x1 < 0:
+
+    #Out of Bounds
+    if x1 >= disx or x1 < 0:
         game_over = True
-    if y1 > disy or y1 < 0:
+    if y1 >= disy or y1 < 0:
         game_over = True
-    dis.fill(black)
+
+    #Eat food and increase snake size
+    #if x1 == x2 and y1 == y2:
+
+    dis.fill(white)
     pygame.draw.rect(dis,red, [x1, y1, 10, 10])
+    pygame.draw.rect(dis,black, [x2, y2, 10, 10])
     pygame.display.update()
-    clock.tick(25)
+    clock.tick(20)
 pygame.quit()
 quit()
