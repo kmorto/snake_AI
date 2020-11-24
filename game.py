@@ -22,18 +22,20 @@ def draw_snake(snake_list):
         pygame.draw.rect(dis, red, [x[0], x[1], 10, 10]) #draws at the x and y with size 10 10
 
 
+#Displays end game message on screen
 def message (msg, color):
     render = font.render(msg, True, color)
     dis.blit(render, [disx/20, disy/2])
 
+#Displays score on screen
 def score (value):
     msg = font.render("Score: " + str(value), True, blue)
     dis.blit(msg, [0,0])
 
 
 def snake_play():
-    game_over = False
-    game_continue = False
+    game_over = False #Closes the window if true
+    game_continue = False #Gives option to continue playing
     snake_length = 1  # used for score
     snake_list = []  # to keep track of the positions of each block of the snake
 
