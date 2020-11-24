@@ -16,8 +16,8 @@ white = (255, 255, 255)
 x1 = disx / 2
 y1 = disy / 2
 # Randomly place food
-x2 = random.randrange(1, disx)
-y2 = random.randrange(1, disy)
+x2 = round(random.randrange(0, disx - 10) / 10.0) * 10.0
+y2 = round(random.randrange(0, disy - 10) / 10.0) * 10.0
 
 #to move the snake on key press
 x_change = 0
@@ -25,7 +25,14 @@ y_change = 0
 
 clock = pygame.time.Clock()
 
+def draw_snake(snake_list):
+    for x in snake_list:
+        pygame.draw.rect(dis, red, [x[0], x[1], 10, 10]) #draws at the x and y with size 10 10
+
 game_over = False
+snake_length = 1 #used for score
+snake_list = [] #to keep track of the positions of each block of the snake
+
 while not game_over:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -52,13 +59,32 @@ while not game_over:
     if y1 >= disy or y1 < 0:
         game_over = True
 
-    #Eat food and increase snake size
-    #if x1 == x2 and y1 == y2:
-
     dis.fill(white)
-    pygame.draw.rect(dis,red, [x1, y1, 10, 10])
     pygame.draw.rect(dis,black, [x2, y2, 10, 10])
+    snake_head = [] #keeps track of the head of the snake
+    snake_head.append(x1)
+    snake_head.append(y1)
+    snake_list.append(snake_head)
+
+    #So we only draw the correct number of blocks
+    if len(snake_list) > snake_length:
+        del snake_list[0]
+
+    #End game if snake collides with itself
+    for x in snake_list[:-1]:
+        if x == snake_head:
+            game_over = True
+
+    draw_snake(snake_list)
     pygame.display.update()
+
+    #Eat food and increase snake size. Place new food
+    if x1 == x2 and y1 == y2:
+        print("Munch")
+        x2 = round(random.randrange(0, disx - 10) / 10.0) * 10.0
+        y2 = round(random.randrange(0, disy - 10) / 10.0) * 10.0
+        snake_length = snake_length + 1
+
     clock.tick(20)
 pygame.quit()
 quit()
