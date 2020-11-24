@@ -26,6 +26,10 @@ def message (msg, color):
     render = font.render(msg, True, color)
     dis.blit(render, [disx/20, disy/2])
 
+def score (value):
+    msg = font.render("Score: " + str(value), True, blue)
+    dis.blit(msg, [0,0])
+
 
 def snake_play():
     game_over = False
@@ -101,6 +105,7 @@ def snake_play():
                 game_continue = True
 
         draw_snake(snake_list)
+        score(snake_length - 1)
         pygame.display.update()
 
         #Eat food and increase snake size. Place new food
