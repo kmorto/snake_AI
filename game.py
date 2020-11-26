@@ -1,5 +1,6 @@
 import pygame
 import random
+from snake import *
 
 pygame.init()
 disx = 400
@@ -12,7 +13,7 @@ blue = (0, 0, 255)
 black = (0, 0, 0)
 white = (255, 255, 255)
 
-
+snake = Snake(10)
 font = pygame.font.SysFont(None, 25)
 clock = pygame.time.Clock()
 

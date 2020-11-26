@@ -1,22 +1,24 @@
 class Snake:
 
     def __init__(self, tileSize):
-        self.snakeList = {'x': 0, 'y': 0}
+        self.x = 0; #For head pos
+        self.y = 0;
+        self.snakeList = []
         self.snakeTile = tileSize
         self.snakeLength = 1
         self.snakeSpeed = 30
 
     def head_x(self):
-        return self.snakeList['x']
+        return self.x
 
     def head_y(self):
-        return self.snakeList['y']
+        return self.y
 
     def newheadx(self, newX):
-        self.snakeList['x'] = newX
+        self.x = newX
 
     def newheady(self, newY):
-        self.snakeList['y'] = newY
+        self.y = newY
 
     def length(self):
         return self.snakeLength
