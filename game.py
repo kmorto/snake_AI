@@ -58,6 +58,9 @@ def snake_play():
             pygame.display.update()
 
             for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    game_over = True
+                    game_continue = False
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_p:
                         snake_play()
