@@ -1,6 +1,7 @@
 import pygame
 import random
 from snake import *
+from ai import *
 
 pygame.init()
 disx = 400
@@ -35,8 +36,13 @@ def score (value):
 
 
 def snake_play():
-    game_over = False #Closes the window if true
+    game_over = True #Closes the window if true
     game_continue = False #Gives option to continue playing
+    game_ai = False #option to let the AI play
+    game_human = False #option to let user control snake
+    mode = True
+
+    ai = SnakeAI(disx, disy)
     snake_length = 1  # used for score
     snake_list = []  # to keep track of the positions of each block of the snake
 
@@ -51,6 +57,22 @@ def snake_play():
     # to move the snake on key press
     x_change = 0
     y_change = 0
+
+    #Ask if AI or Human is playing
+    while(mode):
+        dis.fill(black)
+        message("Press 1 to play or Press 2 for AI", red)
+        pygame.display.update()
+        for event in pygame.event.get():
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_1:
+                    game_human = True
+                    game_over = False
+                    mode = False
+                if event.key == pygame.K_2:
+                    game_ai = True
+                    game_over = False
+                    mode = False
 
     while not game_over:
         while game_continue == True:
@@ -72,19 +94,25 @@ def snake_play():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 game_over = True
-            if event.type == pygame.KEYDOWN: #Moves the snake UP DOWN LEFT or RIGHT on key press
-                if event.key == pygame.K_LEFT or event.key == pygame.K_a:
-                    x_change = -10
-                    y_change = 0
-                if event.key == pygame.K_RIGHT or event.key == pygame.K_d:
-                    x_change = 10
-                    y_change = 0
-                if event.key == pygame.K_UP or event.key == pygame.K_w:
-                    y_change = -10
-                    x_change = 0
-                if event.key == pygame.K_DOWN or event.key == pygame.K_s:
-                    y_change = 10
-                    x_change = 0
+            if (game_human):
+                if event.type == pygame.KEYDOWN: #Moves the snake UP DOWN LEFT or RIGHT on key press
+                    if event.key == pygame.K_LEFT or event.key == pygame.K_a:
+                        x_change = -10
+                        y_change = 0
+                    if event.key == pygame.K_RIGHT or event.key == pygame.K_d:
+                        x_change = 10
+                        y_change = 0
+                    if event.key == pygame.K_UP or event.key == pygame.K_w:
+                        y_change = -10
+                        x_change = 0
+                    if event.key == pygame.K_DOWN or event.key == pygame.K_s:
+                        y_change = 10
+                        x_change = 0
+        if(game_ai):
+            ai.circle()
+            x1 = ai.snake.x
+            y1 = ai.snake.y
+
 
         #Out of Bounds
         if x1 >= disx or x1 < 0:
@@ -124,5 +152,21 @@ def snake_play():
         clock.tick(20)
     pygame.quit()
     quit()
+
+def ai_snake():
+    game_over = False
+    ai = SnakeAI()
+    ai.snake.x = disx / 2
+    ai.snake.y = disy / 2
+    while not game_over:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                game_over = True
+        pygame.draw.rect(dis, blue, [ai.snake.x, ai.snake.y, 10, 10])
+        pygame.display.update()
+        ai.moveUp()
+    pygame.quit()
+    quit()
+
 
 snake_play()
