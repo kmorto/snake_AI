@@ -2,6 +2,7 @@ import pygame
 import random
 from snake import *
 from ai import *
+from food import *
 
 pygame.init()
 disx = 400
@@ -15,6 +16,8 @@ black = (0, 0, 0)
 white = (255, 255, 255)
 
 snake = Snake(10)
+global foodPos
+food = Food(disx, disy)
 font = pygame.font.SysFont(None, 25)
 clock = pygame.time.Clock()
 
@@ -51,8 +54,9 @@ def snake_play():
     y1 = disy / 2
 
     # Randomly place food
-    x2 = round(random.randrange(0, disx - 10) / 10.0) * 10.0
-    y2 = round(random.randrange(0, disy - 10) / 10.0) * 10.0
+    foodPos = food.getPos()
+    x2 = foodPos[0]
+    y2 = foodPos[1]
 
     # to move the snake on key press
     x_change = 0
@@ -145,8 +149,10 @@ def snake_play():
         #Eat food and increase snake size. Place new food
         if x1 == x2 and y1 == y2:
             print("Munch")
-            x2 = round(random.randrange(0, disx - 10) / 10.0) * 10.0
-            y2 = round(random.randrange(0, disy - 10) / 10.0) * 10.0
+            food.newPos()
+            foodPos = food.getPos()
+            x2 = foodPos[0]
+            y2 = foodPos[1]
             snake_length = snake_length + 1
 
         clock.tick(20)
