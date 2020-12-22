@@ -12,7 +12,7 @@ class GameState:
     position: tuple #list that gives the poisiton of the food in respect to snake
     surroundings: tuple  # 4 number list that gives surroundings
     food: tuple  # Returns the x and y position of the food
-    obstacle: tuple
+   # obstacle: tuple
 
 
 
