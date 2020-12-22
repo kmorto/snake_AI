@@ -15,3 +15,4 @@ class Food:
 
     def getPos(self):
         return [self.x, self.y]
+

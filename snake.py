@@ -1,3 +1,4 @@
+import food
 
 class Snake:
 
